@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestor de Playlist Multimedia</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-dark text-light">
+
+<div class="container py-4">
+    <h1 class="text-center mb-4"><strong>Reproductor Multimedia</strong></h1>
+
+    <div class="row g-4">
+
+        <!-- SECCIÓN 1: GESTIÓN DE CANALES -->
+        <div class="col-md-5">
+            <div class="card bg-secondary text-white shadow">
+                <div class="card-header fw-bold">Canales Creadores</div>
+                <div class="card-body">
+
+                    <form id="formulario-canal" class="mb-3">
+                        <!-- Oculto este campo para guardar el ID al editar un canal existente -->
+                        <input type="hidden" id="canal-id">
+
+                        <div class="mb-2">
+                            <label for="canal-nombre" class="form-label">Nombre del Canal</label>
+                            <input type="text" class="form-control" id="canal-nombre" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="canal-suscriptores" class="form-label">Suscriptores</label>
+                            <input type="number" class="form-control" id="canal-suscriptores" min="0" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-success btn-sm">Guardar Canal</button>
+                        <button type="button" class="btn btn-outline-light btn-sm" id="boton-cancelar-canal">Cancelar</button>
+                    </form>
+
+                    <table class="table table-dark table-sm table-hover mb-0">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Canal</th>
+                            <th>Subs</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <!-- Cuerpo de la tabla: Queda el elemento para que JavaScript meta los datos después en los canales -->
+                        <tbody id="cuerpo-tabla-canales"></tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2: GESTIÓN DE CONTENIDOS (PLAYLIST) -->
+        <div class="col-md-7">
+            <div class="card bg-secondary text-white shadow">
+                <div class="card-header fw-bold">Elementos en Playlist</div>
+                <div class="card-body">
+
+                    <form id="formulario-contenido" class="mb-3">
+                        <!-- Campo oculto para guardar el ID al editar un elemento -->
+                        <input type="hidden" id="contenido-id">
+
+                        <div class="row g-2 mb-2">
+                            <div class="col-md-4">
+                                <label for="contenido-tipo" class="form-label">Tipo</label>
+                                <select class="form-select" id="contenido-tipo" required>
+                                    <!-- Los 'value' coinciden con el @DiscriminatorValue de Java -->
+                                    <option value="CANCION">Canción</option>
+                                    <option value="VIDEO">Video</option>
+                                    <option value="PODCAST">Podcast</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-8">
+                                <label for="contenido-canal-select" class="form-label">Canal Creador</label>
+                                <select class="form-select" id="contenido-canal-select" required></select>
+                            </div>
+                        </div>
+
+                        <div class="row g-2 mb-2">
+                            <div class="col-md-8">
+                                <label for="contenido-titulo" class="form-label">Título</label>
+                                <input type="text" class="form-control" id="contenido-titulo" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="contenido-duracion" class="form-label">Duración (Min.Seg)</label>
+                                <input type="number" step="0.01" min="0" class="form-control" id="contenido-duracion" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="contenido-dato-extra" class="form-label" id="etiqueta-dato-extra">Álbum</label>
+                            <input type="text" class="form-control" id="contenido-dato-extra" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-sm">Agregar en la Playlist</button>
+                        <button type="button" class="btn btn-outline-light btn-sm" id="boton-cancelar-contenido">Cancelar</button>
+                    </form>
+
+                    <table class="table table-dark table-sm table-hover mb-0">
+                        <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Título</th>
+                            <th>Canal</th>
+                            <th>Duración</th>
+                            <th>Detalle</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <!-- Cuerpo de la tabla: Queda el elemento para que JavaScript meta los datos después en la playlist -->
+                        <tbody id="cuerpo-tabla-contenidos"></tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Fila centrada para controlar el ancho de la nota -->
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8">
+        <div class="alert alert-danger text-center shadow-sm mb-0" role="alert">
+            <strong>Nota:</strong> Debe crear un canal antes de agregar un elemento multimedia a la playlist.
+        </div>
+    </div>
+</div>
+
+<!-- conecto archivo de javascript -->
+<script src="js/app.js"></script>
+</body>
+</html>

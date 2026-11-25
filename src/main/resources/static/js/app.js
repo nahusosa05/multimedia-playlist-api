@@ -7,9 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Cambia la etiqueta dinámica según el tipo de contenido elegido
-document.getElementById("tipoContenido").addEventListener("change", (e) => {
-    const label = document.getElementById("labelExtra");
-    const input = document.getElementById("datoExtra");
+document.getElementById("contenido-tipo").addEventListener("change", (e) => {
+    const label = document.getElementById("etiqueta-dato-extra");
+    const input = document.getElementById("contenido-dato-extra");
     if (e.target.value === "CANCION") {
         label.textContent = "Álbum";
         input.type = "text";
@@ -23,12 +23,12 @@ document.getElementById("tipoContenido").addEventListener("change", (e) => {
 });
 
 // ==================== CRUD CANALES ====================
-document.getElementById("form-canal").addEventListener("submit", (e) => {
+document.getElementById("formulario-canal").addEventListener("submit", (e) => {
     e.preventDefault();
-    const id = document.getElementById("idCanal").value;
+    const id = document.getElementById("canal-id").value;
     const canal = {
-        nombre: document.getElementById("nombreCanal").value.trim(),
-        suscriptores: parseInt(document.getElementById("suscriptoresCanal").value)
+        nombre: document.getElementById("canal-nombre").value.trim(),
+        suscriptores: parseInt(document.getElementById("canal-suscriptores").value)
     };
 
     fetch(id ? `${API_CANALES}/${id}` : API_CANALES, {
@@ -44,19 +44,19 @@ document.getElementById("form-canal").addEventListener("submit", (e) => {
         .catch(err => alert(err.message));
 });
 
-document.getElementById("cancelarCanal").addEventListener("click", limpiarFormCanal);
+document.getElementById("boton-cancelar-canal").addEventListener("click", limpiarFormCanal);
 
 function limpiarFormCanal() {
-    document.getElementById("form-canal").reset();
-    document.getElementById("idCanal").value = "";
+    document.getElementById("formulario-canal").reset();
+    document.getElementById("canal-id").value = "";
 }
 
 function listarCanales() {
     fetch(API_CANALES)
         .then(res => res.json())
         .then(canales => {
-            const tbody = document.getElementById("tabla-canales");
-            const select = document.getElementById("selectCanal");
+            const tbody = document.getElementById("cuerpo-tabla-canales");
+            const select = document.getElementById("contenido-canal-select");
             tbody.innerHTML = "";
             select.innerHTML = '<option value="">Seleccione un canal...</option>';
 
@@ -80,9 +80,9 @@ function editarCanal(id) {
     fetch(`${API_CANALES}/${id}`)
         .then(res => res.json())
         .then(c => {
-            document.getElementById("idCanal").value = c.id;
-            document.getElementById("nombreCanal").value = c.nombre;
-            document.getElementById("suscriptoresCanal").value = c.suscriptores;
+            document.getElementById("canal-id").value = c.id;
+            document.getElementById("canal-nombre").value = c.nombre;
+            document.getElementById("canal-suscriptores").value = c.suscriptores;
         });
 }
 
@@ -100,17 +100,17 @@ function eliminarCanal(id) {
 }
 
 // ==================== CRUD PLAYLIST ====================
-document.getElementById("form-contenido").addEventListener("submit", (e) => {
+document.getElementById("formulario-contenido").addEventListener("submit", (e) => {
     e.preventDefault();
-    const id = document.getElementById("idContenido").value;
-    const tipo = document.getElementById("tipoContenido").value;
-    const extra = document.getElementById("datoExtra").value.trim();
+    const id = document.getElementById("contenido-id").value;
+    const tipo = document.getElementById("contenido-tipo").value;
+    const extra = document.getElementById("contenido-dato-extra").value.trim();
 
     const payload = {
         tipo: tipo,
-        titulo: document.getElementById("tituloContenido").value.trim(),
-        duracionMinutos: parseFloat(document.getElementById("duracionContenido").value),
-        canal: { id: parseInt(document.getElementById("selectCanal").value) }
+        titulo: document.getElementById("contenido-titulo").value.trim(),
+        duracionMinutos: parseFloat(document.getElementById("contenido-duracion").value),
+        canal: { id: parseInt(document.getElementById("contenido-canal-select").value) }
     };
 
     if (tipo === "CANCION") payload.album = extra;
@@ -130,20 +130,20 @@ document.getElementById("form-contenido").addEventListener("submit", (e) => {
         .catch(err => alert(err.message));
 });
 
-document.getElementById("cancelarContenido").addEventListener("click", limpiarFormContenido);
+document.getElementById("boton-cancelar-contenido").addEventListener("click", limpiarFormContenido);
 
 function limpiarFormContenido() {
-    document.getElementById("form-contenido").reset();
-    document.getElementById("idContenido").value = "";
-    document.getElementById("tipoContenido").disabled = false;
-    document.getElementById("labelExtra").textContent = "Álbum";
+    document.getElementById("formulario-contenido").reset();
+    document.getElementById("contenido-id").value = "";
+    document.getElementById("contenido-tipo").disabled = false;
+    document.getElementById("etiqueta-dato-extra").textContent = "Álbum";
 }
 
 function listarContenidos() {
     fetch(API_CONTENIDOS)
         .then(res => res.json())
         .then(lista => {
-            const tbody = document.getElementById("tabla-contenidos");
+            const tbody = document.getElementById("cuerpo-tabla-contenidos");
             tbody.innerHTML = "";
 
             lista.forEach(item => {
@@ -171,16 +171,16 @@ function editarContenido(id) {
     fetch(`${API_CONTENIDOS}/${id}`)
         .then(res => res.json())
         .then(item => {
-            document.getElementById("idContenido").value = item.id;
-            const selectTipo = document.getElementById("tipoContenido");
+            document.getElementById("contenido-id").value = item.id;
+            const selectTipo = document.getElementById("contenido-tipo");
             selectTipo.value = item.tipo;
             selectTipo.dispatchEvent(new Event("change"));
             selectTipo.disabled = true; // El tipo de entidad no cambia al editar
 
-            document.getElementById("selectCanal").value = item.canal.id;
-            document.getElementById("tituloContenido").value = item.titulo;
-            document.getElementById("duracionContenido").value = item.duracionMinutos;
-            document.getElementById("datoExtra").value = item.album ?? item.calidad ?? item.numeroEpisodio;
+            document.getElementById("contenido-canal-select").value = item.canal.id;
+            document.getElementById("contenido-titulo").value = item.titulo;
+            document.getElementById("contenido-duracion").value = item.duracionMinutos;
+            document.getElementById("contenido-dato-extra").value = item.album ?? item.calidad ?? item.numeroEpisodio;
         });
 }
 

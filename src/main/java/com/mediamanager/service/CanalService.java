@@ -1,10 +1,8 @@
 package com.mediamanager.service;
 
 import com.mediamanager.model.Canal;
-import com.mediamanager.model.ElementoMultimedia;
 import com.mediamanager.repository.CanalRepository;
 import com.mediamanager.repository.ElementoMultimediaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,11 +10,14 @@ import java.util.Optional;
 
 @Service
 public class CanalService {
-    @Autowired
-    private CanalRepository canalRepository;
+    private final CanalRepository canalRepository;
 
-    @Autowired
-    private ElementoMultimediaRepository multimediaRepository;
+    private final ElementoMultimediaRepository multimediaRepository;
+
+    public CanalService(CanalRepository canalRepository, ElementoMultimediaRepository multimediaRepository) {
+        this.canalRepository = canalRepository;
+        this.multimediaRepository = multimediaRepository;
+    }
 
     public List<Canal> listarTodos() {
         return canalRepository.findAll();

@@ -2,7 +2,6 @@ package com.mediamanager.controller;
 
 import com.mediamanager.model.ElementoMultimedia;
 import com.mediamanager.service.ElementoMultimediaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +13,11 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class ElementoMultimediaController {
 
-    @Autowired
-    private ElementoMultimediaService multimediaService;
+    private final ElementoMultimediaService multimediaService;
+
+    public ElementoMultimediaController(ElementoMultimediaService multimediaService) {
+        this.multimediaService = multimediaService;
+    }
 
     @GetMapping
     public List<ElementoMultimedia> listar() {

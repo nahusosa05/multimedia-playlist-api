@@ -2,7 +2,6 @@ package com.mediamanager.controller;
 
 import com.mediamanager.model.Canal;
 import com.mediamanager.service.CanalService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +12,11 @@ import java.util.List;
 @RequestMapping("/api/canales")
 @CrossOrigin(origins = "*")
 public class CanalController {
-    @Autowired
-    private CanalService canalService;
+    private final CanalService canalService;
+
+    public CanalController(CanalService canalService) {
+        this.canalService = canalService;
+    }
 
     @GetMapping
     public List<Canal> listar() {

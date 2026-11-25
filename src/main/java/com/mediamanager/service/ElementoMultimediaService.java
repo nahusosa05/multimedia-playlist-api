@@ -12,11 +12,14 @@ import java.util.Optional;
 @Service
 public class ElementoMultimediaService {
 
-    @Autowired
-    private ElementoMultimediaRepository multimediaRepository;
+    private final ElementoMultimediaRepository multimediaRepository;
 
-    @Autowired
-    private CanalRepository canalRepository;
+    private final CanalRepository canalRepository;
+
+    public ElementoMultimediaService(ElementoMultimediaRepository multimediaRepository, CanalRepository canalRepository) {
+        this.multimediaRepository = multimediaRepository;
+        this.canalRepository = canalRepository;
+    }
 
     public List<ElementoMultimedia> listarTodos() {
         return multimediaRepository.findAll();

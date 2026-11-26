@@ -15,7 +15,7 @@ NOTA: Para su correcto funcionamiento, al clonar el repositorio, completar en `.
 
 > 🔗 **[Ver demostración en YouTube](https://www.youtube.com/watch?v=JT2_LIza7fI)**
 
-En el video se recorre la arquitectura en capas del proyecto, los endpoints RESTful, el funcionamiento en vivo desde el frontend realizado y la persistencia en tiempo real sobre MySQL.o y la persistencia en tiempo real sobre MySQL, chequeando las respectivas tablas.
+En el video se recorre la arquitectura en capas del proyecto, los endpoints RESTful, el funcionamiento en vivo desde el frontend realizado y la persistencia en tiempo real sobre la base de datos relacional MySQL, chequeando las respectivas tablas.
 
 ---
 ## Estructura del Proyecto
